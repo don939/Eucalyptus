@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌿 Leafy Clean</title>
+  <link rel="icon" type="image/png" href="img/leafyclean-removebg-preview.png">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2/particles.min.js"></script>
+  <style>
+    @keyframes rotate { 
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+    .rotate-3d {
+      animation: rotate 5s linear infinite;
+    }
+    body {
+        font-family: Georgia, serif;
+    }
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+     
+      z-index: -1;
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="bg-green-50 flex items-center justify-center min-h-screen overflow-hidden">
+  <!-- Particles.js Background -->
+  <div id="particles-js"></div>
+
+  <!-- Content -->
+  <div class="text-center content">
+    <div class="flex justify-center mb-4">
+      <img alt="3D rotating illustration of a eucalyptus leaf" class="h-44 rotate-3d" src="img/1239930-removebg-preview.png">
+    </div>
+    <h1 class="text-4xl font-bold text-green-800 mb-2">
+      Discover Eucalyptus
+    </h1>
+    <p class="text-lg text-gray-700 mb-6">
+      Nature's healing powerhouse: Explore the benefits and versatility of eucalyptus leaves in modern wellness
+    </p>
+    <div class="flex justify-center space-x-4">
+      <a href="learnmore.html" class="bg-white text-green-800 border border-green-800 px-4 py-2 rounded-full flex items-center hover:bg-green-800 hover:text-white transition-all">
+           Learn More
+        <i class="fas fa-arrow-down ml-2"></i>
+      </a>
+      <a href="plantown.html" class="bg-green-800 text-white px-4 py-2 rounded-full flex items-center hover:bg-green-700 transition-all">
+         Plant Your Own
+        <i class="fas fa-seedling ml-2"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Particles.js Configuration -->
+  <script>
+    particlesJS.load('particles-js', 'particles.json', function() {
+      console.log('Particles.js loaded!');
+    });
+  </script>
+</body>
+</html>

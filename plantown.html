@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌿 Plant Your Own Eucalyptus</title>
+     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-green-50 text-gray-900 font-sans">
+    <a href="learnmore.html" class="text-gray-500 hover:text-green-600">
+        <i class="fas fa-leaf text-2xl"></i>
+      </a>
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold text-center mb-6">Plant Your Own Eucalyptus</h1>
+        <p class="text-center text-gray-700 mb-8">Grow your virtual eucalyptus tree and watch it thrive with care!</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Plant Creation Section -->
+            <div>
+                <div class="bg-green-200 p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold mb-4">Start Growing</h2>
+                    <label for="plant-name" class="block mb-2 text-lg">Plant Name</label>
+                    <input type="text" id="plant-name" class="w-full p-3 border rounded-lg mb-4" placeholder="My Eucalyptus">
+                    <button id="plant-seed" class="bg-green-700 text-white px-6 py-3 rounded-lg shadow hover:bg-green-800 transition">Plant Seed</button>
+                </div>
+                <div id="plants-container" class="mt-6">
+                    <!-- Dynamically Added Plants -->
+                </div>
+            </div>
+            
+            <!-- 3D View Section -->
+            <div class="bg-green-200 p-6 rounded-lg shadow-md flex items-center justify-center relative">
+                <div id="view-section" class="w-full h-96 flex items-center justify-center">
+                    <p class="text-gray-700">Select a plant to view</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('plant-seed').addEventListener('click', function() {
+            const plantName = document.getElementById('plant-name').value;
+            if (!plantName.trim()) {
+                alert("Please enter a name for your plant!");
+                return;
+            }
+
+            const plantContainer = document.createElement('div');
+            plantContainer.className = 'bg-green-100 p-4 rounded-lg mb-4';
+            let growthStage = 1;
+            let health = 100;
+
+            plantContainer.innerHTML = `
+                <h3 class="text-lg font-semibold mb-2">${plantName}</h3>
+                <p>Growth Stage: <span class="growth-stage">${growthStage}</span></p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                    <div class="bg-green-600 h-2.5 rounded-full health-bar" style="width: ${health}%"></div>
+                </div>
+                <p>Health: <span class="health">${health}%</span></p>
+                <div class="mt-2">
+                    <button class="bg-white border px-4 py-2 rounded mr-2 water-btn"><i class="fas fa-tint"></i> Water</button>
+                    <button class="bg-white border px-4 py-2 rounded fertilize-btn"><i class="fas fa-seedling"></i> Fertilize</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded remove-plant">Remove</button>
+                </div>
+            `;
+            document.getElementById('plants-container').appendChild(plantContainer);
+
+            const waterBtn = plantContainer.querySelector('.water-btn');
+            const fertilizeBtn = plantContainer.querySelector('.fertilize-btn');
+            const removeBtn = plantContainer.querySelector('.remove-plant');
+            const growthText = plantContainer.querySelector('.growth-stage');
+            const healthText = plantContainer.querySelector('.health');
+            const healthBar = plantContainer.querySelector('.health-bar');
+
+            waterBtn.addEventListener('click', function() {
+                health = Math.min(health + 10, 100);
+                healthText.textContent = health + '%';
+                healthBar.style.width = health + '%';
+                update3DPlant(growthStage, health);
+            });
+
+            fertilizeBtn.addEventListener('click', function() {
+                if (health > 50) {
+                    growthStage += 1;
+                    growthText.textContent = growthStage;
+                    update3DPlant(growthStage, health);
+                } else {
+                    alert("Your plant is not healthy enough to grow!");
+                }
+            });
+
+            removeBtn.addEventListener('click', function() {
+                plantContainer.remove();
+                document.getElementById('view-section').innerHTML = '<p>Select a plant to view</p>';
+            });
+
+            plantContainer.addEventListener('click', function() {
+                show3DPlant(growthStage, health);
+            });
+        });
+
+        function show3DPlant(growthStage = 1, health = 100) {
+            const viewSection = document.getElementById('view-section');
+            viewSection.innerHTML = '';
+            const canvas = document.createElement('canvas');
+            viewSection.appendChild(canvas);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, viewSection.clientWidth / viewSection.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(viewSection.clientWidth, viewSection.clientHeight);
+
+            // Add lighting
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(5, 5, 5).normalize();
+            scene.add(light);
+
+            // Trunk
+            const trunkGeometry = new THREE.CylinderGeometry(0.2, 0.2, growthStage, 10);
+            const trunkMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 });
+            const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+            scene.add(trunk);
+
+            // Leaves
+            const leavesGeometry = new THREE.SphereGeometry(0.5 + (growthStage * 0.2), 16, 16);
+            const leavesMaterial = new THREE.MeshPhongMaterial({ color: health > 50 ? 0x228B22 : 0xA9A9A9 });
+            const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+            leaves.position.y = growthStage / 2 + 0.5;
+            scene.add(leaves);
+
+            // Camera position
+            camera.position.z = 5;
+            camera.position.y = growthStage / 2;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                leaves.rotation.y += 0.01;
+                trunk.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        function update3DPlant(growthStage, health) {
+            show3DPlant(growthStage, health);
+        }
+    </script>
+</body>
+</html>
