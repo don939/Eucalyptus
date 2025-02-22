@@ -7,20 +7,24 @@
   <link rel="icon" type="image/png" href="img/leafyclean-removebg-preview.png">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
   <!-- Font Awesome Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-  
-   
   <!-- ScrollReveal -->
   <script src="https://unpkg.com/scrollreveal"></script>
-  
   <style>
-     body {
-        font-family: Georgia, serif;
+    body {
+      font-family: Georgia, serif;
     }
     html {
       scroll-behavior: smooth;
+    }
+    /* Navbar styles */
+    .navbar {
+      transition: background 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
     }
     /* Scroll-to-top button styles */
     #scrollToTop {
@@ -44,102 +48,130 @@
     }
   </style>
 </head>
-<body class="bg-green-50 ">
-    <div class="flex justify-between items-center p-4">
-        <!-- Left-aligned icon -->
-        <a href="index.html" class="text-gray-500 hover:text-green-600">
-          <i class="fas fa-leaf text-2xl"></i>
-        </a>
-      
-        <!-- Right-aligned icon -->
-        <a href="plantown.html" class="text-gray-500 hover:text-green-600">
-          <i class="fas fa-leaf text-2xl"></i>
-        </a>
-      </div>
-      
-  <div class="max-w-7xl mx-auto p-6">
-    <h1 class="text-3xl font-bold text-center mb-8 scroll-reveal">Health Benefits of Eucalyptus</h1>
-   
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
-        
-      <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
-        <div class="bg-green-100 p-3 rounded-full mr-4">
-          <i class="fas fa-wind text-green-600"></i>
-        </div>
-        <div>
-          <h2 class="text-xl font-semibold">Respiratory Health</h2>
-          <p class="text-gray-600">Helps clear airways and supports breathing</p>
-        </div>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
-        <div class="bg-green-100 p-3 rounded-full mr-4">
-          <i class="fas fa-heart text-green-600"></i>
-        </div>
-        <div>
-          <h2 class="text-xl font-semibold">Anti-inflammatory</h2>
-          <p class="text-gray-600">Reduces inflammation and soothes discomfort</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
-        <div class="bg-green-100 p-3 rounded-full mr-4">
-          <i class="fas fa-wind text-green-600"></i>
-        </div>
-        <div>
-          <h2 class="text-xl font-semibold">Immune Support</h2>
-          <p class="text-gray-600">Boosts natural immunity and resistance</p>
-        </div>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
-        <div class="bg-green-100 p-3 rounded-full mr-4">
-          <i class="fas fa-heart text-green-600"></i>
-        </div>
-        <div>
-          <h2 class="text-xl font-semibold">Stress Relief</h2>
-          <p class="text-gray-600">Natural aromatherapy for relaxation</p>
-        </div>
-      </div>
-    </div>
-    <!-- -->
-    <h2 class="text-3xl font-bold text-center mb-8 scroll-reveal">Our Products</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
-        <img class="rounded-t-lg mb-4" src="img/oil.webp" alt="Eucalyptus leaves in a white vase">
-        <h3 class="text-xl font-semibold">Essential Oils</h3>
-        <p class="text-gray-600">Soothes muscle pain when applied with a carrier oil</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
-        <img class="rounded-t-lg mb-4" src="img/liquidsoap.webp" alt="Hands preparing natural remedies">
-        <h3 class="text-xl font-semibold">Liquid Soap</h3>
-        <p class="text-gray-600">Cleanses hands & body while moisturizing skin</p>
-      </div>
-       <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
-        <img class="rounded-t-lg mb-4" src="img/detergent.webp" alt="Hands preparing natural remedies">
-        <h3 class="text-xl font-semibold">Detergent</h3>
-        <p class="text-gray-600">Removes stains & odors naturally</p>
-      </div>
-    </div>
-    <br>
-    <!-- AI-Powered Recommendations Section -->
-<h2 class="text-3xl font-bold text-center mb-8 scroll-reveal">🌿 Recommendations</h2>
-<div id="ai-recommendation" class="bg-white p-6 rounded-lg shadow-md text-center scroll-reveal">
-  <h3 class="text-xl font-semibold">🤖 Suggests:</h3>
-  <p class="text-gray-600 mt-2" id="ai-text">Loading recommendation...</p>
-</div>
-    </br>
-    <a href="index.html" class="text-gray-500 hover:text-green-600">
-        <i class="fas fa-leaf text-2xl"></i>
+<body class="bg-green-50">
+  <!-- Transparent Navbar -->
+  <nav class="navbar fixed top-0 left-0 w-full z-50 p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a href="index.html" class="text-gray-700 hover:text-green-600 text-xl font-bold flex items-center">
+        <i class="fas fa-leaf mr-2"></i>
+        Leafy Clean
       </a>
+      <!-- Nav Links -->
+      <div class="hidden md:flex space-x-6">
+        <a href="#benefits" class="text-gray-700 hover:text-green-600">Benefits</a>
+        <a href="#products" class="text-gray-700 hover:text-green-600">Products</a>
+        <a href="#recommendations" class="text-gray-700 hover:text-green-600">Recommendations</a>
+        <a href="#about" class="text-gray-700 hover:text-green-600">About Us</a>
+      </div>
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuButton" class="md:hidden text-gray-700 hover:text-green-600">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden bg-white shadow-lg mt-2 hidden">
+      <a href="#benefits" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Benefits</a>
+      <a href="#products" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Products</a>
+      <a href="#recommendations" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Recommendations</a>
+      <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-green-50">About Us</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto p-6 pt-24">
+    <!-- Benefits Section -->
+    <section id="benefits">
+      <h1 class="text-3xl font-bold text-center mb-8 scroll-reveal">Health Benefits of Eucalyptus</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+        <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
+          <div class="bg-green-100 p-3 rounded-full mr-4">
+            <i class="fas fa-wind text-green-600"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold">Respiratory Health</h2>
+            <p class="text-gray-600">Helps clear airways and supports breathing</p>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
+          <div class="bg-green-100 p-3 rounded-full mr-4">
+            <i class="fas fa-heart text-green-600"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold">Anti-inflammatory</h2>
+            <p class="text-gray-600">Reduces inflammation and soothes discomfort</p>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+        <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
+          <div class="bg-green-100 p-3 rounded-full mr-4">
+            <i class="fas fa-wind text-green-600"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold">Immune Support</h2>
+            <p class="text-gray-600">Boosts natural immunity and resistance</p>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md flex items-center scroll-reveal">
+          <div class="bg-green-100 p-3 rounded-full mr-4">
+            <i class="fas fa-heart text-green-600"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold">Stress Relief</h2>
+            <p class="text-gray-600">Natural aromatherapy for relaxation</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+      <h2 class="text-3xl font-bold text-center mb-8 scroll-reveal">Our Products</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
+          <img class="rounded-t-lg mb-4" src="img/oil.webp" alt="Eucalyptus leaves in a white vase">
+          <h3 class="text-xl font-semibold">Essential Oils</h3>
+          <p class="text-gray-600">Soothes muscle pain when applied with a carrier oil</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
+          <img class="rounded-t-lg mb-4" src="img/liquidsoap.webp" alt="Hands preparing natural remedies">
+          <h3 class="text-xl font-semibold">Liquid Soap</h3>
+          <p class="text-gray-600">Cleanses hands & body while moisturizing skin</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
+          <img class="rounded-t-lg mb-4" src="img/detergent.webp" alt="Hands preparing natural remedies">
+          <h3 class="text-xl font-semibold">Detergent</h3>
+          <p class="text-gray-600">Removes stains & odors naturally</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section id="recommendations" class="mt-16">
+      <h2 class="text-3xl font-bold text-center mb-8 scroll-reveal">🌿 Recommendations</h2>
+      <div id="ai-recommendation" class="bg-white p-6 rounded-lg shadow-md text-center scroll-reveal">
+        <h3 class="text-xl font-semibold">🤖 Suggests:</h3>
+        <p class="text-gray-600 mt-2" id="ai-text">Loading recommendation...</p>
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="mt-16">
+      <h2 class="text-3xl font-bold text-center mb-8 scroll-reveal">About Us</h2>
+      <div class="bg-white p-6 rounded-lg shadow-md scroll-reveal">
+        <p class="text-gray-600">
+          We are an <a href="#" style="color:#ffbd59;">Enactus Babcock </a>team and we are passionate about bringing the natural benefits of eucalyptus into your daily life. Our products are crafted with care, using sustainably sourced ingredients to ensure the highest quality. Join us in embracing a cleaner, greener lifestyle!
+        </p>
+      </div>
+    </section>
   </div>
-  
+
   <!-- Scroll-to-top Button -->
   <button id="scrollToTop" title="Go to top">
     <i class="fas fa-arrow-up"></i>
   </button>
-  
+
   <script>
     // ScrollReveal Animations
     ScrollReveal().reveal('.scroll-reveal', {
@@ -148,7 +180,7 @@
       origin: 'bottom',
       interval: 100,
     });
-    
+
     // Scroll-to-top Button
     const scrollToTopButton = document.getElementById('scrollToTop');
     window.onscroll = function () {
@@ -161,9 +193,25 @@
     scrollToTopButton.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-  </script>
-  <script>
-    // Simulating OpenAI recommendation (You can replace this with an actual API call)
+
+    // Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // AI Recommendations
     const recommendations = [
       "Try using eucalyptus essential oil in a steam bath for congestion relief!",
       "Eucalyptus-scented candles can reduce stress and improve focus!",
@@ -171,14 +219,10 @@
       "Drinking eucalyptus tea can help soothe sore throats and boost immunity!",
       "Placing eucalyptus leaves in your shower releases a refreshing aroma for relaxation!"
     ];
-  
-    // Randomly select a recommendation
     function generateRecommendation() {
       const randomIndex = Math.floor(Math.random() * recommendations.length);
       document.getElementById("ai-text").textContent = recommendations[randomIndex];
     }
-  
-    // Load a new recommendation on page load
     window.onload = generateRecommendation;
   </script>
 </body>
